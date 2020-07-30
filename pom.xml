@@ -11,6 +11,7 @@
     <modules>
         <module>9672Login2JavaSpring</module>
         <module>9669Login1JavaSpring</module>
+        <module>9679Login4JavaSpring</module>
     </modules>
     <name>9673Login3JavaSpring</name>
     <description>security login</description>
