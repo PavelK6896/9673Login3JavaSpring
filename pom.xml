@@ -10,8 +10,9 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>9672Login2JavaSpring</module>
-        <module>9669Login1JavaSpring</module>
+        <module>9669Login1JavaSpringOauth2</module>
         <module>9679Login4JavaSpring</module>
+        <module>9704Login5JavaSpringJWT</module>
     </modules>
     <name>9673Login3JavaSpring</name>
     <description>security login</description>

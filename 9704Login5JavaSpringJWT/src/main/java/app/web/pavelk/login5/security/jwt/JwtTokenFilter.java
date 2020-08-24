@@ -1,0 +1,58 @@
+package app.web.pavelk.login5.security.jwt;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
+import org.springframework.web.filter.GenericFilterBean;
+
+import javax.servlet.FilterChain;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+@Component
+public class JwtTokenFilter extends GenericFilterBean { //слушает запросы клиента
+    private final JwtTokenProvider jwtTokenProvider;
+
+    public JwtTokenFilter(JwtTokenProvider jwtTokenProvider) {
+        this.jwtTokenProvider = jwtTokenProvider;
+    }
+
+    @Override
+    public void doFilter(ServletRequest servletRequest,
+                         ServletResponse servletResponse,
+                         FilterChain filterChain)
+            throws IOException, ServletException {
+
+        //дергает токен из запровса
+        String token = jwtTokenProvider.resolveToken((HttpServletRequest) servletRequest);
+
+        try {
+            if (token != null && jwtTokenProvider.validateToken(token)) {
+                // загрузи усера создаст спринговую аут
+                Authentication authentication = jwtTokenProvider.getAuthentication(token);
+
+                if (authentication != null) {
+                    // в контекст
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                }
+            }
+            // если токен нул мошь его создать надо
+
+        } catch (JwtAuthenticationException e) {
+            //очистить
+            SecurityContextHolder.clearContext();
+
+            // статус из взломаного токена
+            ((HttpServletResponse) servletResponse).sendError(e.getHttpStatus().value());
+            throw new JwtAuthenticationException("JWT token is expired or invalid");
+        }
+
+        //следующий фильтор или ..
+        filterChain.doFilter(servletRequest, servletResponse);
+
+    }
+}

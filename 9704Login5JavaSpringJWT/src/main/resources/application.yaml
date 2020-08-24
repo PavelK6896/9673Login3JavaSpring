@@ -16,9 +16,15 @@ spring:
 
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/postgres?currentSchema=login2
+    url: jdbc:postgresql://localhost:5432/login5
     username: postgres
     password: 0
+
+
+jwt:
+  header: Authorization
+  secret: proselyte
+  expiration: 604800
 
 
 

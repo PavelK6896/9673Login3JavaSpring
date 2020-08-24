@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Welcome</title>
+</head>
+<body>
+<h1>Welcome to proselyte Spring Security course</h1>
+
+<button type="button" onclick="f1()">Sign in</button>
+<button type="button" onclick="f2()">f2</button>
+
+<script>
+    let token;
+    const f1 = () => {
+
+        fetch('http://localhost:8080/api/v1/auth/login',
+            {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({email: '1', password: '1'})
+            }).then(response => response.json())
+            .then(json => {
+                console.log(json);
+                token = json.token
+            })
+            .catch(console.log);
+    }
+
+    const f2 = () => {
+        console.log(token)
+        fetch('http://localhost:8080/api/v1/developers',
+            {
+                method: 'GET',
+                headers: {'Authorization': token},
+            }).then(response => response.json())
+            .then(json => console.log(json))
+            .catch(console.log);
+    }
+</script>
+
+
+</body>
+</html>

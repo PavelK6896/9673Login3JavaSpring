@@ -4,8 +4,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class Application1 {
+public class Application {
     public static void main(String[] args) {
-        SpringApplication.run(app.web.pavelk.login1.Application1.class, args);
+        SpringApplication.run(Application.class, args);
     }
 }
